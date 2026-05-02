@@ -1,0 +1,23 @@
+# Sample workflow: drop into .github/workflows/auth.yml of your repo.
+# Replace the issuer + audience values with yours.
+# Store your jwtshield API key as repository secret JWTSHIELD_API_KEY.
+
+name: Auth regression
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  jwt:
+    name: jwtshield CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: redbullhorns/jwtshield-ci@v1
+        with:
+          issuer: https://login.example.com
+          audience: api://backend
+          allowed-algs: RS256
+          fail-on-severity: high
+          api-key: ${{ secrets.JWTSHIELD_API_KEY }}
